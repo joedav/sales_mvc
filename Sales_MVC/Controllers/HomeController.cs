@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sales_MVC.Models;
+using Sales_MVC.Models.ViewModels;
+using System.Diagnostics;
 
 namespace Sales_MVC.Controllers
 {
@@ -20,6 +16,8 @@ namespace Sales_MVC.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Teste"] = "Apenas para exibição";
+            ViewBag.Nada = "Presta atencao joe";
             return View();
         }
 
