@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Sales_MVC.Data;
 
 namespace Sales_MVC
@@ -27,8 +22,8 @@ namespace Sales_MVC
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<Sales_MVCContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Sales_MVCContext")));
+            services.AddDbContext<SalesMVCContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SalesMVCContext"), builder => builder.MigrationsAssembly("SalesMVC")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
