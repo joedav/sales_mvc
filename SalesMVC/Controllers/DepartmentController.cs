@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Sales_MVC.Data;
-using Sales_MVC.Models;
+using SalesMVC.Data;
+using SalesMVC.Models;
 
-namespace Sales_MVC.Controllers
+namespace SalesMVC.Controllers
 {
     public class DepartmentController : Controller
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sales_MVC.Models.ViewModels;
+using SalesMVC.Models.ViewModels;
 using System.Diagnostics;
 
-namespace Sales_MVC.Controllers
+namespace SalesMVC.Controllers
 {
     public class HomeController : Controller
     {

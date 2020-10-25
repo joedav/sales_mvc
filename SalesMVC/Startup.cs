@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sales_MVC.Data;
+using SalesMVC.Data;
 
-namespace Sales_MVC
+namespace SalesMVC
 {
     public class Startup
     {

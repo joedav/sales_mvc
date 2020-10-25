@@ -1,19 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Sales_MVC.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesMVC.Models;
 
-namespace Sales_MVC.Data
+namespace SalesMVC.Data
 {
+    /// <summary>
+    /// Configuring dbcontext with models and dbsets
+    /// </summary>
     public class SalesMVCContext : DbContext
     {
-        public SalesMVCContext (DbContextOptions<SalesMVCContext> options)
+        /// <summary>
+        /// Cosntructor
+        /// </summary>
+        /// <param name="options"></param>
+        public SalesMVCContext(DbContextOptions<SalesMVCContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Sales_MVC.Models.Department> Department { get; set; }
+        /// <summary>
+        /// Dbset of department
+        /// </summary>
+        public DbSet<Department> Department { get; set; }
+
+        /// <summary>
+        /// Seller dbset
+        /// </summary>
+        public DbSet<Seller> Saller { get; set; }
+
+        /// <summary>
+        /// SalesRecod dbset
+        /// </summary>
+        public DbSet<SalesRecord> SalesRecord { get; set; }
     }
 }
