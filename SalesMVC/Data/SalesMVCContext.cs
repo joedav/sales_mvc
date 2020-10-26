@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesMVC.Models;
 
-namespace SalesMVC.Data
+namespace SalesMVC.Models
 {
     /// <summary>
     /// Configuring dbcontext with models and dbsets
@@ -25,7 +25,7 @@ namespace SalesMVC.Data
         /// <summary>
         /// Seller dbset
         /// </summary>
-        public DbSet<Seller> Saller { get; set; }
+        public DbSet<Seller> Seller { get; set; }
 
         /// <summary>
         /// SalesRecod dbset

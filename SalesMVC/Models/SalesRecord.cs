@@ -1,5 +1,6 @@
 ﻿using SalesMVC.Models.Enums;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesMVC.Models
 {
