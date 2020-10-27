@@ -13,7 +13,7 @@ namespace SalesMVC.Data
         /// <summary>
         /// Context
         /// </summary>
-        private SalesMVCContext _context;
+        private readonly SalesMVCContext _context;
 
         /// <summary>
         /// Cosntructor to init a contetext
