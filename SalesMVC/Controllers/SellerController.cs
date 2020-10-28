@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesMVC.Models;
 using SalesMVC.Services;
 
 namespace SalesMVC.Controllers
@@ -19,6 +20,7 @@ namespace SalesMVC.Controllers
         }
         #endregion
 
+        #region Methods
         /// <summary>
         /// Action index
         /// </summary>
@@ -28,5 +30,34 @@ namespace SalesMVC.Controllers
             var sellers = _sellerService.GetSellers();
             return View(sellers);
         }
+
+        /// <summary>
+        /// View create
+        /// </summary>
+        /// <returns>View create</returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Save new Saller in db
+        /// </summary>
+        /// <param name="seller">New obj seller</param>
+        /// <returns>Index</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _sellerService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }

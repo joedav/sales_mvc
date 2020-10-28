@@ -12,11 +12,14 @@ namespace SalesMVC.Services
     /// </summary>
     public class SellerService
     {
+        #region Properties
         /// <summary>
         /// Context
         /// </summary>
         private readonly SalesMVCContext _context;
+        #endregion
 
+        #region Constructors
         /// <summary>
         /// Simple constructor to init context
         /// </summary>
@@ -25,7 +28,9 @@ namespace SalesMVC.Services
         {
             _context = context;
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Get all sellers
         /// </summary>
@@ -34,5 +39,33 @@ namespace SalesMVC.Services
         {
             return _context.Seller.ToList();
         }
+
+        /// <summary>
+        /// Save seller
+        /// </summary>
+        /// <param name="seller">Seller to save</param>
+        public async void Insert(Seller seller)
+        {
+            _context.Add(seller);
+            await _context.SaveChangesAsync();
+        }
+
+        public Seller GetSeller(int id)
+        {
+            Seller seller = _context.Seller.Find(id);
+            return seller;
+        }
+
+        /// <summary>
+        /// Delete seller
+        /// </summary>
+        /// <param name="seller">Seller to delete</param>
+        public void Delete(int id)
+        {
+
+            _context.Remove(GetSeller(id));
+            _context.SaveChanges();
+        }
+        #endregion
     }
 }
