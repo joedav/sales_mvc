@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesMVC.Models;
+using SalesMVC.Models.ViewModel;
 using SalesMVC.Services;
 
 namespace SalesMVC.Controllers
@@ -11,12 +12,14 @@ namespace SalesMVC.Controllers
     {
         #region Properties
         private readonly SellerService _sellerService;
+        private readonly DepartmentService _departmentService;
         #endregion
 
         #region Constructors
-        public SellerController(SellerService sellerService)
+        public SellerController(SellerService sellerService, DepartmentService departmentService)
         {
             _sellerService = sellerService;
+            _departmentService = departmentService;
         }
         #endregion
 
@@ -37,7 +40,9 @@ namespace SalesMVC.Controllers
         /// <returns>View create</returns>
         public IActionResult Create()
         {
-            return View();
+            var departments = _departmentService.FindAll();
+            var sellerViewModel = new SellerFormViewModel { Departments = departments };
+            return View(sellerViewModel);
         }
 
         /// <summary>

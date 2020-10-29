@@ -6,15 +6,26 @@ using System.Threading.Tasks;
 
 namespace SalesMVC.Controllers
 {
+    /// <summary>
+    /// Department controller
+    /// </summary>
     public class DepartmentController : Controller
     {
+        #region Properties
+        /// <summary>
+        /// Property context
+        /// </summary>
         private readonly SalesMVCContext _context;
+        #endregion
 
+        #region Constructors
         public DepartmentController(SalesMVCContext context)
         {
             _context = context;
         }
+        #endregion
 
+        #region Methods
         // GET: Departments
         public async Task<IActionResult> Index()
         {
@@ -145,5 +156,6 @@ namespace SalesMVC.Controllers
         {
             return _context.Department.Any(e => e.Id == id);
         }
+        #endregion
     }
 }
