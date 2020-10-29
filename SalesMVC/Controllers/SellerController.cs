@@ -53,6 +53,11 @@ namespace SalesMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Delete a seller
+        /// </summary>
+        /// <param name="id">Id of seller to delete</param>
+        /// <returns>Redirect to action index</returns>
         public IActionResult Delete(int id)
         {
             _sellerService.Delete(id);

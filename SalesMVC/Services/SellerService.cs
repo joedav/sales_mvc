@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySqlConnector.Logging;
 using SalesMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -44,10 +45,11 @@ namespace SalesMVC.Services
         /// Save seller
         /// </summary>
         /// <param name="seller">Seller to save</param>
-        public async void Insert(Seller seller)
+        public void Insert(Seller seller)
         {
+            seller.Department = _context.Department.First();
             _context.Add(seller);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public Seller GetSeller(int id)

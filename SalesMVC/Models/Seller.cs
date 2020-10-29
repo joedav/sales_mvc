@@ -42,6 +42,11 @@ namespace SalesMVC.Models
         public Department Department { get; set; }
 
         /// <summary>
+        /// Department id
+        /// </summary>
+        public int DepartmentId { get; set; }
+
+        /// <summary>
         /// Sales
         /// </summary>
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
