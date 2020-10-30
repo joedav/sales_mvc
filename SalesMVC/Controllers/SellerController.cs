@@ -63,9 +63,29 @@ namespace SalesMVC.Controllers
         /// </summary>
         /// <param name="id">Id of seller to delete</param>
         /// <returns>Redirect to action index</returns>
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var model = _sellerService.FindById(id.Value);
+
+            if (model == null)
+                return NotFound();
+
+            return View("Delete", model);
+        }
+
+        /// <summary>
+        /// Delete an seller by id
+        /// </summary>
+        /// <param name="id">Id of seller to delete</param>
+        /// <returns>List View</returns>
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             _sellerService.Delete(id);
+
             return RedirectToAction(nameof(Index));
         }
         #endregion

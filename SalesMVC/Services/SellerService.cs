@@ -51,20 +51,25 @@ namespace SalesMVC.Services
             _context.SaveChanges();
         }
 
-        public Seller GetSeller(int id)
+        /// <summary>
+        /// Get by id
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>Seller</returns>
+        public Seller FindById(int id)
         {
             Seller seller = _context.Seller.Find(id);
             return seller;
         }
 
         /// <summary>
-        /// Delete seller
+        /// Delete a seller by id
         /// </summary>
-        /// <param name="seller">Seller to delete</param>
+        /// <param name="id">Id to delete</param>
         public void Delete(int id)
         {
 
-            _context.Remove(GetSeller(id));
+            _context.Remove(FindById(id));
             _context.SaveChanges();
         }
         #endregion
