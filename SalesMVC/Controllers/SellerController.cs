@@ -30,7 +30,7 @@ namespace SalesMVC.Controllers
         /// <returns>Index</returns>
         public IActionResult Index()
         {
-            var sellers = _sellerService.GetSellers();
+            var sellers = _sellerService.FindAll();
             return View(sellers);
         }
 
@@ -87,6 +87,13 @@ namespace SalesMVC.Controllers
             _sellerService.Delete(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int id)
+        {
+            var model = _sellerService.FindById(id);
+
+            return View(model);
         }
         #endregion
     }

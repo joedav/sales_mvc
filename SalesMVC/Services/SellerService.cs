@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySqlConnector.Logging;
 using SalesMVC.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesMVC.Services
 {
@@ -36,9 +33,9 @@ namespace SalesMVC.Services
         /// Get all sellers
         /// </summary>
         /// <returns>All sellers</returns>
-        public List<Seller> GetSellers()
+        public List<Seller> FindAll()
         {
-            return _context.Seller.ToList();
+            return _context.Seller.Include(seller => seller.Department).ToList();
         }
 
         /// <summary>
@@ -58,7 +55,7 @@ namespace SalesMVC.Services
         /// <returns>Seller</returns>
         public Seller FindById(int id)
         {
-            Seller seller = _context.Seller.Find(id);
+            Seller seller = _context.Seller.Include(seller => seller.Department).FirstOrDefault(seller => seller.Id == id);
             return seller;
         }
 
