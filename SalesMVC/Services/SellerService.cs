@@ -3,6 +3,7 @@ using SalesMVC.Models;
 using SalesMVC.Services.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SalesMVC.Services
 {
@@ -34,9 +35,10 @@ namespace SalesMVC.Services
         /// Get all sellers
         /// </summary>
         /// <returns>All sellers</returns>
-        public List<Seller> FindAll()
+        public async Task<List<Seller>> FindAllAsync()
         {
-            return _context.Seller.Include(seller => seller.Department).ToList();
+            var sellers = await _context.Seller.Include(seller => seller.Department).ToListAsync();
+            return sellers;
         }
 
         /// <summary>
@@ -44,35 +46,35 @@ namespace SalesMVC.Services
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns>Seller</returns>
-        public Seller FindById(int id)
+        public async Task<Seller> FindByIdAsync(int id)
         {
-            Seller seller = _context.Seller.Include(seller => seller.Department).FirstOrDefault(seller => seller.Id == id);
-            return seller;
+            return await _context.Seller.Include(seller => seller.Department).FirstOrDefaultAsync(seller => seller.Id == id);
         }
 
         /// <summary>
         /// Save seller
         /// </summary>
         /// <param name="seller">Seller to save</param>
-        public void Insert(Seller seller)
+        public async Task InsertAsync(Seller seller)
         {
             _context.Add(seller);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Update seller
         /// </summary>
         /// <param name="seller">Seller</param>
-        public void Update(Seller seller)
+        public async Task UpdateAsync(Seller seller)
         {
-            if (!_context.Seller.Any(s => s.Id == seller.Id))
+            bool has = await _context.Seller.AnyAsync(s => s.Id == seller.Id);
+            if (!has)
                 throw new NotFoundException($"Seller not found!");
 
             try
             {
                 _context.Update(seller);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbConcurrencyException ex)
             {
@@ -84,11 +86,11 @@ namespace SalesMVC.Services
         /// Delete a seller by id
         /// </summary>
         /// <param name="id">Id to delete</param>
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-
-            _context.Remove(FindById(id));
-            _context.SaveChanges();
+            var seller = await FindByIdAsync(id);
+            _context.Remove(seller);
+            await _context.SaveChangesAsync();
         }
         #endregion
     }
