@@ -74,7 +74,7 @@ namespace SalesMVC.Controllers
 
             var seller = _sellerService.FindById(id.Value);
 
-            if (Seller null)
+            if (seller is null)
                 return RedirectToAction(nameof(Error), new { message = "Seller not found in database." });
 
             List<Department> departments = _departmentService.FindAll();

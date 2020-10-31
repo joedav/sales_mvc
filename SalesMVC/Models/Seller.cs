@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -19,26 +21,31 @@ namespace SalesMVC.Models
         /// <summary>
         /// Name of saller
         /// </summary>
+        [DisplayName("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Email of saller
         /// </summary>
+        [DisplayName("E-mail"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         /// <summary>
         /// Birth date of saller
         /// </summary>
+        [DisplayName("Birth date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
 
         /// <summary>
         /// Salary base of saller
         /// </summary>
+        [DisplayName("Salary"), DisplayFormat(DataFormatString = "{0:f2}")]
         public double BaseSalary { get; set; }
 
         /// <summary>
         /// Department
         /// </summary>
+        [DisplayName("Department")]
         public Department Department { get; set; }
 
         /// <summary>
@@ -49,6 +56,7 @@ namespace SalesMVC.Models
         /// <summary>
         /// Sales
         /// </summary>
+        [DisplayName("Sales")]
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
         #endregion
 
