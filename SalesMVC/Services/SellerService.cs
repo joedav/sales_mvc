@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesMVC.Models;
+using SalesMVC.Services.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,6 +40,17 @@ namespace SalesMVC.Services
         }
 
         /// <summary>
+        /// Get by id
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>Seller</returns>
+        public Seller FindById(int id)
+        {
+            Seller seller = _context.Seller.Include(seller => seller.Department).FirstOrDefault(seller => seller.Id == id);
+            return seller;
+        }
+
+        /// <summary>
         /// Save seller
         /// </summary>
         /// <param name="seller">Seller to save</param>
@@ -49,14 +61,23 @@ namespace SalesMVC.Services
         }
 
         /// <summary>
-        /// Get by id
+        /// Update seller
         /// </summary>
-        /// <param name="id">Id</param>
-        /// <returns>Seller</returns>
-        public Seller FindById(int id)
+        /// <param name="seller">Seller</param>
+        public void Update(Seller seller)
         {
-            Seller seller = _context.Seller.Include(seller => seller.Department).FirstOrDefault(seller => seller.Id == id);
-            return seller;
+            if (!_context.Seller.Any(s => s.Id == seller.Id))
+                throw new NotFoundException($"Seller not found!");
+
+            try
+            {
+                _context.Update(seller);
+                _context.SaveChanges();
+            }
+            catch (DbConcurrencyException ex)
+            {
+                throw new DbConcurrencyException(ex.Message);
+            }
         }
 
         /// <summary>

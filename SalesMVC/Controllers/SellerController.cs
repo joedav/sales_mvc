@@ -2,6 +2,8 @@
 using SalesMVC.Models;
 using SalesMVC.Models.ViewModel;
 using SalesMVC.Services;
+using SalesMVC.Services.Exceptions;
+using System.Collections.Generic;
 
 namespace SalesMVC.Controllers
 {
@@ -56,6 +58,57 @@ namespace SalesMVC.Controllers
         {
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// View Edit seller
+        /// </summary>
+        /// <param name="id">id of seller</param>
+        /// <returns>View edit seller</returns>
+        public IActionResult Edit(int? id)
+        {
+            if (id is null)
+                return NotFound();
+
+            var seller = _sellerService.FindById(id.Value);
+
+            if (seller is null)
+                return NotFound();
+
+            List<Department> departments = _departmentService.FindAll();
+
+            SellerFormViewModel viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+
+
+            _sellerService.Update(seller);
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// Method to update seller
+        /// </summary>
+        /// <param name="seller">Seller to update</param>
+        /// <returns>View with updated seller</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Seller seller)
+        {
+            if (id != seller.Id)
+                return BadRequest();
+
+            try
+            {
+                _sellerService.Update(seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException ex)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
