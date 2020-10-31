@@ -13,15 +13,18 @@
             <div class="form-group">
                 <label asp-for="Seller.Name" class="control-label"></label>
                 <input asp-for="Seller.Name" class="form-control" placeholder="Name" />
+                <span asp-validation-for="Seller.Name" class="text-danger"/>
             </div>
             <div class="form-group">
                 <label asp-for="Seller.Email" class="control-label"></label>
                 <input asp-for="Seller.Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Seller.Email" class="text-danger"/>
             </div>
             <div class="row form-group">
                 <div class="col-5">
                     <label asp-for="Seller.BirthDate" class="control-label"></label>
                     <input asp-for="Seller.BirthDate" class="form-control" placeholder="BirthDate" />
+                    <span asp-validation-for="Seller.BirthDate" class="text-danger"/>
                 </div>
                 <div class="col-5">
                     <label asp-for="Seller.DepartmentId" class="control-label"></label>
@@ -30,7 +33,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Seller.BaseSalary" class="control-label"></label>
-                <input asp-for="Seller.BaseSalary" class="form-control" placeholder="Name" />
+                <input asp-for="Seller.BaseSalary" class="form-control" placeholder="10.00" />
+                <span asp-validation-for="Seller.BaseSalary" class="text-danger"/>
             </div>
             <div class="form-group">
                 <input asp-action="Edit" type="submit" value="Update" class="btn btn-info" />
@@ -40,3 +44,6 @@
     </div>
 </div>
 
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

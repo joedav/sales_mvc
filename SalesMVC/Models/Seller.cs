@@ -21,25 +21,25 @@ namespace SalesMVC.Models
         /// <summary>
         /// Name of saller
         /// </summary>
-        [DisplayName("Name")]
+        [Required(ErrorMessage = "{0} is required."), DisplayName("Name"), StringLength(30, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
         public string Name { get; set; }
 
         /// <summary>
         /// Email of saller
         /// </summary>
-        [DisplayName("E-mail"), DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "{0} is required."), DisplayName("E-mail"), DataType(DataType.EmailAddress), EmailAddress(ErrorMessage = "Enter a valid {0}.")]
         public string Email { get; set; }
 
         /// <summary>
         /// Birth date of saller
         /// </summary>
-        [DisplayName("Birth date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "{0} is required."), DisplayName("Birth date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
 
         /// <summary>
         /// Salary base of saller
         /// </summary>
-        [DisplayName("Salary"), DisplayFormat(DataFormatString = "{0:f2}")]
+        [DisplayName("Salary"), DisplayFormat(DataFormatString = "{0:f2}"), Range(100.0, 5000.0, ErrorMessage = "{0} must be from {1} to {2}")]
         public double BaseSalary { get; set; }
 
         /// <summary>
@@ -51,6 +51,7 @@ namespace SalesMVC.Models
         /// <summary>
         /// Department id
         /// </summary>
+        [DisplayName("Department")]
         public int DepartmentId { get; set; }
 
         /// <summary>
