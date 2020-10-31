@@ -88,9 +88,16 @@ namespace SalesMVC.Services
         /// <param name="id">Id to delete</param>
         public async Task DeleteAsync(int id)
         {
-            var seller = await FindByIdAsync(id);
-            _context.Remove(seller);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var seller = await FindByIdAsync(id);
+                _context.Remove(seller);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new IntegrityException(ex.Message);
+            }
         }
         #endregion
     }

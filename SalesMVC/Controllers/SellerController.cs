@@ -4,6 +4,7 @@ using SalesMVC.Models.ViewModel;
 using SalesMVC.Models.ViewModels;
 using SalesMVC.Services;
 using SalesMVC.Services.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -118,13 +119,9 @@ namespace SalesMVC.Controllers
                 await _sellerService.UpdateAsync(seller);
                 return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException notFoundEx)
+            catch (ApplicationException ex)
             {
-                return RedirectToAction(nameof(Error), new { message = notFoundEx.Message });
-            }
-            catch (DbConcurrencyException dbConcurrencyEx)
-            {
-                return RedirectToAction(nameof(Error), new { message = dbConcurrencyEx.Message });
+                return RedirectToAction(nameof(Error), new { message = ex.Message });
             }
         }
 
@@ -154,9 +151,15 @@ namespace SalesMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await _sellerService.DeleteAsync(id);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _sellerService.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException ex)
+            {
+                return RedirectToAction(nameof(Error), new { message = ex.Message });
+            }
         }
 
         public async Task<IActionResult> Details(int id)
