@@ -2,6 +2,7 @@
 using SalesMVC.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,18 +40,32 @@ namespace SalesMVC.Services
         public async Task<List<SalesRecord>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
         {
             // transforms in object iqueryable
-            var res = from obj in _context.SalesRecord select obj;
+            var result = from obj in _context.SalesRecord select obj;
             if (minDate.HasValue)
-                res = res.Where(salesRec => salesRec.Date >= minDate.Value);
+                result = result.Where(salesRec => salesRec.Date >= minDate.Value);
 
             if (maxDate.HasValue)
-                res = res.Where(salesRec => salesRec.Date <= maxDate.Value);
+                result = result.Where(salesRec => salesRec.Date <= maxDate.Value);
 
-            return await res
+            return await result
                 .Include(salesRec => salesRec.Seller)
                 .Include(salesRec => salesRec.Seller.Department)
                 .OrderByDescending(salesRec => salesRec.Date)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Find sales record by date
+        /// </summary>
+        /// <param name="minDate">Minimum date</param>
+        /// <param name="maxDate">Maximum date</param>
+        /// <returns>List of sales records grup by departments</returns>
+        public async Task<List<IGrouping<Department, SalesRecord>>> FindByDateGroupingAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            // transforms in object iqueryable
+            var result = await FindByDateAsync(minDate, maxDate);
+
+            return result.GroupBy(x => x.Seller.Department).ToList();
         }
         #endregion
     }

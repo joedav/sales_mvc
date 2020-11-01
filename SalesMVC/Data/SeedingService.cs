@@ -2,6 +2,7 @@
 using SalesMVC.Models;
 using SalesMVC.Models.Enums;
 using System;
+using System.Linq;
 
 namespace SalesMVC.Data
 {

@@ -1,5 +1,7 @@
 ﻿using SalesMVC.Models.Enums;
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesMVC.Models
@@ -18,11 +20,13 @@ namespace SalesMVC.Models
         /// <summary>
         /// Date
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
         /// <summary>
         /// Value amount
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:f2}")]
         public double Amount { get; set; }
 
         /// <summary>
